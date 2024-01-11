@@ -23,7 +23,7 @@ try {
 app.post('/schedule', (req: Request, res: Response) => {
   try {
     const newSchedule: monthly_schedule_t = req.body;
-    // Validate the new schedule (you might want to add more validation logic)
+    //more validation needed?
     validateSchedule(newSchedule);
     schedules.push(newSchedule);
     res.status(201).json(newSchedule);
@@ -32,7 +32,7 @@ app.post('/schedule', (req: Request, res: Response) => {
   }
 });
 
-// Endpoint to get user's shifts by empID for a specific month
+
 app.get('/shifts/:empID/:year/:month', (req: Request, res: Response) => {
   try {
     const empID = parseInt(req.params.empID);
@@ -71,17 +71,15 @@ app.get('/schedule/:year/:month', (req: Request, res: Response) => {
   }
 });
 
-// Validation function for a new schedule
+
 function validateSchedule(newSchedule: monthly_schedule_t): void {
-  // Add your validation logic here (e.g., check for required fields, validate data types, etc.)
-  if (!newSchedule.monthUID || !newSchedule.shifts) {
+    //more validation needed?
+    if (!newSchedule.monthUID || !newSchedule.shifts) {
     throw new Error('Invalid schedule format');
   }
 }
 
-// Function to get user's shifts for a specific month
 function getUserShifts(empID: number, monthInfo: month_t): daily_schedule_t | null {
-  // Retrieve the user's shifts from the schedules array (you might want to use a database in a real-world scenario)
   const userSchedule = schedules.find((schedule) => schedule.monthUID.year === monthInfo.year && schedule.monthUID.month === monthInfo.month);
 
   if (userSchedule) {
@@ -92,15 +90,12 @@ function getUserShifts(empID: number, monthInfo: month_t): daily_schedule_t | nu
   return null;
 }
 
-// Function to get the full month's schedule for a specific month
 function getFullMonthSchedule(monthInfo: month_t): monthly_schedule_t | null {
-  // Retrieve the full month's schedule from the schedules array (you might want to use a database in a real-world scenario)
   const fullMonthSchedule = schedules.find((schedule) => schedule.monthUID.year === monthInfo.year && schedule.monthUID.month === monthInfo.month);
 
   return fullMonthSchedule || null;
 }
 
-// Start the server
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
