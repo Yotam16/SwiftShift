@@ -23,6 +23,8 @@ export type employee_t = {
     empID : number;
     fname : string;
     lname : string;
+    created : Date;
+    password : string;
 }
 
 export type monthly_schedule_t = {
