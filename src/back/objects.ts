@@ -1,3 +1,13 @@
+// string types for users
+
+export type uname_t = string & { __customStringBrand: never }; // username: length 5-16, letters, digits and _-
+export type pass_t = string & { __customStringBrand: never };  // password: length 8-16 all chars
+export type name_t = string & { __customStringBrand: never };  // name: length 2-16 letters only
+export type email_t = string;
+export type phone_t = string;
+
+
+// types for schedule DB
 export type month_t = {
     year : number;
     month : number;
@@ -20,9 +30,10 @@ export type daily_schedule_t = {
 }
 
 export type employee_t = {
-    empID : number;
+    uname : string;
     fname : string;
     lname : string;
+    email : string;
     created : Date;
     password : string;
 }
