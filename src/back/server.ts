@@ -8,30 +8,27 @@ const port = 3000;
 
 app.use(bodyParser.json());
 
-
 let schedules: monthly_schedule_t[] = [];
-
 
 const scheduleFilePath = '../../data/schedule.json';
 try {
   const scheduleFileContent = fs.readFileSync(scheduleFilePath, 'utf-8');
   schedules = JSON.parse(scheduleFileContent);
-} catch (error : any) {
+} catch (error: any) {
   console.error(`Error reading or parsing the schedule file: ${error.message}`);
 }
 
 app.post('/schedule', (req: Request, res: Response) => {
   try {
     const newSchedule: monthly_schedule_t = req.body;
-    //more validation needed?
+    // More validation needed?
     validateSchedule(newSchedule);
     schedules.push(newSchedule);
     res.status(201).json(newSchedule);
-  } catch (error : any) {
+  } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
 });
-
 
 app.get('/shifts/:empID/:year/:month', (req: Request, res: Response) => {
   try {
@@ -47,12 +44,12 @@ app.get('/shifts/:empID/:year/:month', (req: Request, res: Response) => {
     const userShifts = getUserShifts(empID, { year, month, days: monthInfo.days });
 
     res.status(200).json(userShifts);
-  } catch (error : any) {
+  } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
 });
 
-// Endpoint to get the full month's schedule for a specific month
+
 app.get('/schedule/:year/:month', (req: Request, res: Response) => {
   try {
     const year = parseInt(req.params.year);
@@ -65,16 +62,19 @@ app.get('/schedule/:year/:month', (req: Request, res: Response) => {
 
     const fullMonthSchedule = getFullMonthSchedule({ year, month, days: monthInfo.days });
 
-    res.status(200).json(fullMonthSchedule);
-  } catch (error : any) {
+    if (fullMonthSchedule) {
+      res.status(200).json(fullMonthSchedule);
+    } else {
+      throw new Error('Month schedule not found');
+    }
+  } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
 });
 
-
 function validateSchedule(newSchedule: monthly_schedule_t): void {
-    //more validation needed?
-    if (!newSchedule.monthUID || !newSchedule.shifts) {
+  // More validation needed?
+  if (!newSchedule.monthUID || !newSchedule.shifts) {
     throw new Error('Invalid schedule format');
   }
 }
