@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Calendar</title>
+</head>
+<body>
+
+    <div class="toolbar">
+        <button id="prevYearButton" onclick="prevYear()"> ◀◀ </button>
+        <button id="prevMonthButton" onclick="prevMonth()">  ◀ </button>
+        <span id="currentMonth"></span>
+        <button id="nextMonthButton" onclick="nextMonth()"> ▶  </button>
+        <button id="nextYearButton" onclick="nextYear()"> ▶▶ </button>
+    </div>
+    
+
+<table class="calendar">
+    <thead>
+        <tr>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+        </tr>
+    </thead>
+    <tbody id="calendarBody"></tbody>
+</table>
+
+<script src="./calendar.ts"></script>
+</body>
+</html>
