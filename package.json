@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "run-p dev:*",
     "dev:server": "ts-node-dev --transpile-only src/index.ts",
-    "dev:sass": "sass src/front --watch",
-    "dev:ts": "tsc --watch --project src/front"
+    "dev:sass": "sass public --watch",
+    "dev:ts": "tsc --watch --project public"
   },
   "keywords": [],
   "author": "",

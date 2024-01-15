@@ -1,11 +1,6 @@
+node_modules
 *.js
-
-!tsconfig.json
-
-!package.json
-!package-lock.json
-
-*.md
-
-*.json
-
+*.js.map
+*.css
+*.css.map
+.env
