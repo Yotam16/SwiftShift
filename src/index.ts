@@ -3,7 +3,6 @@ import { createServer } from "http";
 import express, { Request, Response } from 'express';
 import cookieParser from "cookie-parser";
 import { json } from "body-parser";
-import mongoose from "mongoose";
 import { month_t, daily_schedule_t, monthly_schedule_t, daysInMonth } from './objects';
 import * as fs from 'fs';
 
@@ -12,35 +11,13 @@ const app = express();
 app.use(cookieParser());
 app.use(json());
 
-
 app.get("/api/hello", (req, res) => {
-    res.send("world");
+  res.send("world");
 });
 
 app.use(express.static("public"));
 
-const server = createServer(app);
-const port = process.env.PORT ?? 3000;
-
-/*
-async function init() {
- 
-  if (!process.env.MONGO_CONNECTION_STRING) {
-        throw new Error("Must provide connection string for mongodb");
-    }
-
-    await mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
-        dbName: "app-db-name"
-    });
-    server.listen(port, () => console.log(`Listening on http://localhost:${port}`));
-}
-
-init();
-*/
-
-
-
- let schedules: monthly_schedule_t[] = [];
+let schedules: monthly_schedule_t[] = [];
 
 const scheduleFilePath = './data/schedule.json';
 try {
@@ -58,7 +35,7 @@ app.post('/schedule', (req: Request, res: Response) => {
     schedules.push(newSchedule);
     res.status(201).json(newSchedule);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: (error as Error).message });
   }
 });
 
@@ -77,10 +54,9 @@ app.get('/shifts/:empID/:year/:month', (req: Request, res: Response) => {
 
     res.status(200).json(userShifts);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: (error as Error).message });
   }
 });
-
 
 app.get('/schedule/:year/:month', (req: Request, res: Response) => {
   try {
@@ -100,7 +76,7 @@ app.get('/schedule/:year/:month', (req: Request, res: Response) => {
       throw new Error('Month schedule not found');
     }
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: (error as Error).message });
   }
 });
 
@@ -128,6 +104,7 @@ function getFullMonthSchedule(monthInfo: month_t): monthly_schedule_t | null {
   return fullMonthSchedule || null;
 }
 
+const port = process.env.PORT ?? 3000;
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });

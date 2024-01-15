@@ -51,7 +51,7 @@ const testPhone = (value: string): phone_t | undefined => {
     return undefined;
 };
 
-function submitUser() {
+function submitUser() : void {
     const userNameElement = document.getElementById('userName') as HTMLInputElement | null;
     const firstNameElement = document.getElementById('firstName') as HTMLInputElement | null;
     const lastNameElement = document.getElementById('lastName') as HTMLInputElement | null;
